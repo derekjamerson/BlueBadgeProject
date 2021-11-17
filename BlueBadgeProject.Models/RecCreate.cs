@@ -10,10 +10,10 @@ namespace BlueBadgeProject.Models
     public class RecCreate
     {
         [Required]
-        public int SongID { get; set; }
+        public int SongId { get; set; }
         [Required]
         public int UserProfileId { get; set; }
         [Required]
-        public int GroupID { get; set; }
+        public int GroupId { get; set; }
     }
 }
