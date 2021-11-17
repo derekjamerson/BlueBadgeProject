@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RecCreate.cs" />
+    <Compile Include="RecItem.cs" />
     <Compile Include="SongCreate.cs" />
     <Compile Include="SongItem.cs" />
   </ItemGroup>
