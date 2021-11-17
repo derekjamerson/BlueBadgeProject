@@ -18,7 +18,7 @@ namespace BlueBadgeProject.Data
 
         public virtual Recommendation Recs { get; set; }
 
-        public virtual Group UGroups { get; set; }
+        public virtual Group UserGroups { get; set; }
 
 
         //private List<Groups> _groups = new List<Groups>();
