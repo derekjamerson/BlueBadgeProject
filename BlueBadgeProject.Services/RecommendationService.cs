@@ -83,5 +83,19 @@ namespace BlueBadgeProject.Services
                 return query.ToArray();
             }
         }
+        public bool UpdateRecommendation(RecItem model)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity =
+                    ctx
+                        .Recommendations
+                        .Single(e => e.RecommendationId == model.RecommendationId);
+                entity.UserProfileId = model.UserProfileId;
+                entity.GroupId = model.GroupId;
+                entity.SongId = model.SongId;
+                return ctx.SaveChanges() == 1;
+            }
+        }
     }
 }
