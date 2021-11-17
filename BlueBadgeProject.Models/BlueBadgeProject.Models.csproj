@@ -58,6 +58,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SongCreate.cs" />
+    <Compile Include="SongItem.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
