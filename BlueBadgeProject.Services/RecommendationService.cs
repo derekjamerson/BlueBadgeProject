@@ -5,12 +5,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BlueBadgeProject.Models;
 
 namespace BlueBadgeProject.Services
 {
     public class RecommendationService
     {
-        public bool CreateRecommendation(RecommendationCreate model)
+        public bool CreateRecommendation(RecCreate model)
         {
             var entity = new Recommendation()
             {
