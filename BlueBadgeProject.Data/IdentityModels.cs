@@ -32,6 +32,7 @@ namespace ElevenNote.Data
         {
             return new ApplicationDbContext();
         }
+
         //public DbSet<UserProfile> UserProfiles { get; set; }
         //public DbSet<Group> Groups { get; set; }
         //public DbSet<Song> Songs { get; set; }
