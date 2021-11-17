@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BlueBadgeProject.Models
 {
-    public class RecommendationCreate
+    public class RecCreate
     {
         [Required]
         public int SongID { get; set; }
