@@ -12,13 +12,17 @@ namespace BlueBadgeProject.Data
         [Key]
         public int UserId { get; set; }
 
-        [Required]
-        public string UserName { get; set; }
+        public string FirstName { get; set; }
 
+        public string LastName { get; set; }
 
-        public virtual Recommendation Recs { get; set; }
-
-        public virtual Group UserGroups { get; set; }
+        public virtual ICollection<Group> ListOfGroups { get; set; }
+        public virtual ICollection<Recommendation> ListOfRecommendations { get; set; }
+        public UserProfile()
+        {
+            ListOfGroups = new HashSet<Group>();
+            ListOfRecommendations = new HashSet<Recommendation>();
+        }
 
     }
 }
