@@ -20,20 +20,5 @@ namespace BlueBadgeProject.Data
 
         public virtual Group UserGroups { get; set; }
 
-
-        //private List<Groups> _groups = new List<Groups>();
-        //private List<Recommendations> _recommendations = new List<Recommendations>();
-
-        //public List<Groups> Groups
-        //{
-        //    get
-        //    { return _groups; }
-        //}
-
-        //public List<Recommendations> Recommendations
-        //{
-        //    get 
-        //    { return _recommendations; }
-        //}
     }
 }
