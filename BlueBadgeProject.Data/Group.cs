@@ -13,7 +13,9 @@ namespace BlueBadgeProject.Data
         public int GroupId { get; set; }
         public string Name { get; set; }
         public virtual ICollection<UserProfile> ListOfUsers { get; set; }
-        
-
+        public Group()
+        {
+            ListOfUsers = new HashSet<UserProfile>();
+        }
     }
 }
