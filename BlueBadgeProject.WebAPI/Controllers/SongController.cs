@@ -29,7 +29,13 @@ namespace BlueBadgeProject.WebAPI.Controllers
             if (!service.CreateSong(song))
                 return InternalServerError();
 
-            return Ok($);
+            return Ok();
+        }
+        public IHttpActionResult GetSongById(int id)
+        {
+            SongService songService = CreateSongService();
+            var song = songService.GetSongById(id);
+            return Ok(song);
         }
     }
 }
