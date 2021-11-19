@@ -1,4 +1,5 @@
-﻿using BlueBadgeProject.Models;
+﻿using BlueBadgeProject.Data;
+using BlueBadgeProject.Models;
 using BlueBadgeProject.Services;
 using Microsoft.AspNet.Identity;
 using System;
@@ -30,6 +31,24 @@ namespace BlueBadgeProject.WebAPI.Controllers
                 return InternalServerError();
 
             return Ok();
+        }
+        public RecItem GetRecommendationById(int id)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity =
+                    ctx
+                        .Recommendations
+                        .Single(e => e.RecommendationId == id);
+                return
+                    new RecItem
+                    {
+                        RecommendationId = entity.RecommendationId,
+                        SongId = entity.SongId,
+                        GroupId = entity.GroupId,
+                        UserProfileId = entity.UserProfileId
+                    });
+            }
         }
     }
 }
