@@ -47,7 +47,26 @@ namespace BlueBadgeProject.WebAPI.Controllers
                         SongId = entity.SongId,
                         GroupId = entity.GroupId,
                         UserProfileId = entity.UserProfileId
-                    });
+                    };
+            }
+        }
+        public IEnumerable<RecItem> GetRecommendationByGroupId(int id)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var query =
+                ctx
+                    .Recommendations
+                    .Where(e => e.GroupId == id)
+                    .Select(
+                        e =>
+                            new RecItem
+                            {
+                                RecommendationId = e.RecommendationId,
+                                UserProfileId = e.UserProfileId,
+                                SongId = e.SongId
+                            });
+                return query.ToArray();
             }
         }
     }
