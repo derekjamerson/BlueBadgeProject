@@ -7,11 +7,12 @@ using System.Threading.Tasks;
 
 namespace BlueBadgeProject.Models
 {
-    public class UserProfileItem
+    public class UserProfileCreate
     {
-        public string UserId { get; set; }
+        [Required]
         public string FirstName { get; set; }
-        public string LastName { get; set; }
 
+        [Required]
+        public string LastName { get; set; }
     }
 }
