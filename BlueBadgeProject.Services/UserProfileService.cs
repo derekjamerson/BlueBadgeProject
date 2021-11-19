@@ -15,8 +15,15 @@ namespace BlueBadgeProject.Services
             var entity =
                 new UserProfile()
                 {
-                    
-                }
+                    FirstName = model.FirstName,
+                    LastName = model.LastName
+                };
+            
+            using (var ctx = new ApplicationDbContext())
+            {
+                ctx.UserProfiles.Add(entity);
+                return ctx.SaveChanges() == 1;
+            }
         }
     }
 }
