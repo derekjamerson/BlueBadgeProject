@@ -16,7 +16,7 @@ namespace BlueBadgeProject.Data
         public int SongId { get; set; }
         public virtual Song Song { get; set; }
         [ForeignKey("UserProfile")]
-        public int UserProfileId { get; set; }
+        public string UserProfileId { get; set; }
         public virtual UserProfile UserProfile { get; set; }
         [ForeignKey("Group")]
         public int GroupId { get; set; }
