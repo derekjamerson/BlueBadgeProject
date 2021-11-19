@@ -11,6 +11,12 @@ namespace BlueBadgeProject.Services
 {
     public class SongService
     {
+        private readonly string _userId;
+        public SongService(string userId)
+        {
+            _userId = userId;
+        }
+
         public bool CreateSong(SongCreate model)
         {
             var entity = new Song()
