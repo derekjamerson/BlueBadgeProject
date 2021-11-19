@@ -11,7 +11,13 @@ namespace BlueBadgeProject.Services
 {
     public class RecommendationService
     {
-        public bool CreateRecommendation(RecCreate model)
+        private readonly string _userId;
+        public RecommendationService(string userId)
+        {
+            _userId = userId;
+        }
+
+            public bool CreateRecommendation(RecCreate model)
         {
             var entity = new Recommendation()
             {
