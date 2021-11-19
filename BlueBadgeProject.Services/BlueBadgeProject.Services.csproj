@@ -58,10 +58,22 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RecommendationService.cs" />
+    <Compile Include="SongService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BlueBadgeProject.Data\BlueBadgeProject.Data.csproj">
+      <Project>{125FA27F-7FFC-48F1-A786-39E838E1C5AA}</Project>
+      <Name>BlueBadgeProject.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BlueBadgeProject.Models\BlueBadgeProject.Models.csproj">
+      <Project>{FE2DE5F0-A7E0-49CB-9144-6F53DEA23B3C}</Project>
+      <Name>BlueBadgeProject.Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
