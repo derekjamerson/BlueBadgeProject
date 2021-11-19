@@ -67,5 +67,23 @@ namespace BlueBadgeProject.Services
                 return ctx.SaveChanges() == 1;
             }
         }
+
+        public UserProfileItem GetUserProfileById(string id)
+        {
+            using(var ctx = new ApplicationDbContext())
+            {
+                var entity =
+                    ctx
+                        .UserProfiles
+                        .Single(e => e.UserId == id && e.UserId == _userId);
+                return
+                    new UserProfileItem
+                    {
+                        UserId = entity.UserId,
+                        FirstName = entity.FirstName,
+                        LastName = entity.LastName
+                    };
+            }
+        }
     }
 }
