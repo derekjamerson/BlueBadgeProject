@@ -19,11 +19,10 @@ namespace BlueBadgeProject.Data
         public string LastName { get; set; }
 
         public virtual ICollection<Group> ListOfGroups { get; set; }
-        public virtual ICollection<Recommendation> ListOfRecommendations { get; set; }
+        
         public UserProfile()
         {
             ListOfGroups = new HashSet<Group>();
-            ListOfRecommendations = new HashSet<Recommendation>();
         }
 
     }
