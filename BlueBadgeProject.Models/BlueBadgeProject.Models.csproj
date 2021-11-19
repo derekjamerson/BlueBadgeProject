@@ -62,6 +62,7 @@
     <Compile Include="RecItem.cs" />
     <Compile Include="SongCreate.cs" />
     <Compile Include="SongItem.cs" />
+    <Compile Include="UserProfileItem.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
