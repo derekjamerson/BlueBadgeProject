@@ -29,7 +29,7 @@ namespace BlueBadgeProject.WebAPI.Controllers
             if (!service.CreateSong(song))
                 return InternalServerError();
 
-            return Ok($"");
+            return Ok($);
         }
     }
 }
