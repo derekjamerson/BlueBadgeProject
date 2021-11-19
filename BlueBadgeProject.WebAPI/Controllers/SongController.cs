@@ -37,5 +37,23 @@ namespace BlueBadgeProject.WebAPI.Controllers
             var song = songService.GetSongById(id);
             return Ok(song);
         }
+        public IHttpActionResult GetAll()
+        {
+            SongService songService = CreateSongService();
+            IEnumerable<SongItem> _songs = songService.GetSongs();
+            return Ok();
+        }
+        public IHttpActionResult Put(SongItem song)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var service = CreateSongService();
+
+            if (!service.UpdateSong(song))
+                return InternalServerError();
+
+            return Ok();
+        }
     }
 }
