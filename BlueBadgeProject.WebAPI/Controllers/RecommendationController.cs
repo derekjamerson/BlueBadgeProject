@@ -32,42 +32,26 @@ namespace BlueBadgeProject.WebAPI.Controllers
 
             return Ok();
         }
-        public RecItem GetRecommendationById(int id)
+        public IHttpActionResult GetById(int id)
         {
-            using (var ctx = new ApplicationDbContext())
-            {
-                var entity =
-                    ctx
-                        .Recommendations
-                        .Single(e => e.RecommendationId == id);
-                return
-                    new RecItem
-                    {
-                        RecommendationId = entity.RecommendationId,
-                        SongId = entity.SongId,
-                        GroupId = entity.GroupId,
-                        UserProfileId = entity.UserProfileId
-                    };
-            }
+            RecommendationService recService = CreateRecommendationService();
+            var rec = recService.GetRecById(id);
+            return Ok(rec);
         }
-        public IEnumerable<RecItem> GetRecommendationByGroupId(int id)
+        public IHttpActionResult GetByGroupId(int id)
         {
-            using (var ctx = new ApplicationDbContext())
-            {
-                var query =
-                ctx
-                    .Recommendations
-                    .Where(e => e.GroupId == id)
-                    .Select(
-                        e =>
-                            new RecItem
-                            {
-                                RecommendationId = e.RecommendationId,
-                                UserProfileId = e.UserProfileId,
-                                SongId = e.SongId
-                            });
-                return query.ToArray();
-            }
+            RecommendationService recService = CreateRecommendationService();
+            var recs = recService.GetRecsByGroupId(id);
+            return Ok(recs);
+        }
+        public IHttpActionResult Delete(int id)
+        {
+            var service = CreateRecommendationService();
+
+            if (!service.DeleteRecommendation(id))
+                return InternalServerError();
+
+            return Ok();
         }
     }
 }
