@@ -20,7 +20,6 @@ namespace BlueBadgeProject.Services
             var entity =
                 new UserProfile()
                 {
-                    UserId = _userId,
                     FirstName = model.FirstName,
                     LastName = model.LastName
                 };
@@ -52,14 +51,14 @@ namespace BlueBadgeProject.Services
             }
         }
 
-        public bool UpdateUserProfile(UserProfileItem model)
+        public bool UpdateUserProfile(UserProfileCreate model)
         {
             using(var ctx = new ApplicationDbContext())
             {
                 var entity =
                     ctx
                         .UserProfiles
-                        .Single(e => e.UserId == model.UserId && e.UserId == _userId);
+                        .Single(e => e.UserId == _userId);
 
                 entity.FirstName = model.FirstName;
                 entity.LastName = model.LastName;
