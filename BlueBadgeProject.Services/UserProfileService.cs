@@ -10,8 +10,8 @@ namespace BlueBadgeProject.Services
 {
     public class UserProfileService
     {
-        private readonly string _userId;
-        public UserProfileService(string userId)
+        private readonly Guid _userId;
+        public UserProfileService(Guid userId)
         {
             _userId = userId;
         }
@@ -67,18 +67,18 @@ namespace BlueBadgeProject.Services
             }
         }
 
-        public UserProfileItem GetUserProfileById(string id)
+        public UserProfileItem GetUserProfileById(int id)
         {
             using(var ctx = new ApplicationDbContext())
             {
                 var entity =
                     ctx
                         .UserProfiles
-                        .Single(e => e.UserId == id && e.UserId == _userId);
+                        .Single(e => e.UserProfileId == id && e.UserId == _userId);
                 return
                     new UserProfileItem
                     {
-                        UserId = entity.UserId,
+                        UserProfileId = entity.UserProfileId,
                         FirstName = entity.FirstName,
                         LastName = entity.LastName
                     };

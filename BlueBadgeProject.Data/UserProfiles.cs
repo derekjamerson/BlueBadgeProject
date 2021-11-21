@@ -11,7 +11,8 @@ namespace BlueBadgeProject.Data
     public class UserProfile
     {
         [ForeignKey("ApplicationUser")]
-        public string UserId { get; set; }
+        public int UserProfileId { get; set; }
+        public Guid UserId { get; set; }
         public virtual ApplicationUser ApplicationUser { get; set; }
 
         public string FirstName { get; set; }

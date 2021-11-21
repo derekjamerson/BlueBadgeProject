@@ -10,6 +10,9 @@ namespace BlueBadgeProject.Models
     public class UserProfileCreate
     {
         [Required]
+        public Guid UserId { get; set; }
+
+        [Required]
         public string FirstName { get; set; }
 
         [Required]
