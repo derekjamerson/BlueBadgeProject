@@ -10,8 +10,8 @@ namespace BlueBadgeProject.Services
 {
     public class UserProfileService
     {
-        private readonly string _userId;
-        public UserProfileService(string userId)
+        private readonly Guid _userId;
+        public UserProfileService(Guid userId)
         {
             _userId = userId;
         }
@@ -20,7 +20,6 @@ namespace BlueBadgeProject.Services
             var entity =
                 new UserProfile()
                 {
-                    UserId = _userId,
                     FirstName = model.FirstName,
                     LastName = model.LastName
                 };
@@ -52,19 +51,37 @@ namespace BlueBadgeProject.Services
             }
         }
 
-        public bool UpdateUserProfile(UserProfileItem model)
+        public bool UpdateUserProfile(UserProfileCreate model)
         {
             using(var ctx = new ApplicationDbContext())
             {
                 var entity =
                     ctx
                         .UserProfiles
-                        .Single(e => e.UserId == model.UserId && e.UserId == _userId);
+                        .Single(e => e.UserId == _userId);
 
                 entity.FirstName = model.FirstName;
                 entity.LastName = model.LastName;
 
                 return ctx.SaveChanges() == 1;
+            }
+        }
+
+        public UserProfileItem GetUserProfileById(int id)
+        {
+            using(var ctx = new ApplicationDbContext())
+            {
+                var entity =
+                    ctx
+                        .UserProfiles
+                        .Single(e => e.UserProfileId == id && e.UserId == _userId);
+                return
+                    new UserProfileItem
+                    {
+                        UserProfileId = entity.UserProfileId,
+                        FirstName = entity.FirstName,
+                        LastName = entity.LastName
+                    };
             }
         }
     }
