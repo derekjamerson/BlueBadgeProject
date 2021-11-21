@@ -22,7 +22,7 @@ namespace BlueBadgeProject.Services
             var entity = new Recommendation()
             {
                 SongId = model.SongId,
-                UserProfileId = model.UserProfileId,
+                UserProfileId = _userId,
                 GroupId = model.GroupId
             };
             using (var ctx = new ApplicationDbContext())
@@ -49,7 +49,7 @@ namespace BlueBadgeProject.Services
                     };
             }
         }
-        public IEnumerable<RecItem> GetRecsByUserProfileId(int id)
+        public IEnumerable<RecItem> GetRecsByUserProfileId(string id)
         {
             using (var ctx = new ApplicationDbContext())
             {
@@ -89,17 +89,15 @@ namespace BlueBadgeProject.Services
                 return query.ToArray();
             }
         }
-        public bool UpdateRecommendation(RecItem model)
+        public bool DeleteRecommendation(int id)
         {
             using (var ctx = new ApplicationDbContext())
             {
                 var entity =
                     ctx
                         .Recommendations
-                        .Single(e => e.RecommendationId == model.RecommendationId);
-                entity.UserProfileId = model.UserProfileId;
-                entity.GroupId = model.GroupId;
-                entity.SongId = model.SongId;
+                        .Single(e => e.RecommendationId == id);
+                ctx.Recommendations.Remove(entity);
                 return ctx.SaveChanges() == 1;
             }
         }

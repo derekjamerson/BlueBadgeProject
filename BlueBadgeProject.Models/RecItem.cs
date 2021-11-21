@@ -11,7 +11,7 @@ namespace BlueBadgeProject.Models
     {
         public int RecommendationId { get; set; }
         public int SongId { get; set; }
-        public int UserProfileId { get; set; }
+        public string UserProfileId { get; set; }
         public int GroupId { get; set; }
     }
 }
