@@ -39,5 +39,12 @@ namespace BlueBadgeProject.WebAPI.Controllers
 
             return Ok();
         }
+
+        public IHttpActionResult Get(int id)
+        {
+            UserProfileService userProfileService = CreateUserProfileService();
+            var userProfile = userProfileService.GetUserProfileById(id);
+            return Ok(userProfile);
+        }
     }
 }
