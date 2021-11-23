@@ -15,14 +15,14 @@ namespace BlueBadgeProject.WebAPI.Controllers
     {
 
         // GET: Group
-        public GroupService CreateGroupService()
+        private GroupService CreateGroupService()
         {
             var userId = User.Identity.GetUserId();
             var groupService = new GroupService(userId);
             return groupService;
 
         }
-        //[HttpPost]
+        [HttpPost]
         public IHttpActionResult Post(GroupCreate group)
         {
             if (!ModelState.IsValid)
@@ -35,13 +35,14 @@ namespace BlueBadgeProject.WebAPI.Controllers
 
             return Ok();
         }
-
+        [HttpGet]
         public IHttpActionResult GetAll()
         {
             GroupService groupService = CreateGroupService();
             var groups = groupService.GetGroups();
             return Ok(groups);
         }
+        [HttpPut]
         public IHttpActionResult Put(GroupItem group)
         {
             if (!ModelState.IsValid)
@@ -54,11 +55,13 @@ namespace BlueBadgeProject.WebAPI.Controllers
 
             return Ok();
         }
-        public IHttpActionResult GetByGroupId()
+        [HttpGet]
+        public IHttpActionResult GetByGroupId(int id)
         {
-            var userId = User.Identity.GetUserId();
-            var groupService = new GroupService(userId);
-            return Ok();
+
+            GroupService grouped = CreateGroupService();
+            var intId = grouped.GetGroupById(id);
+            return Ok(intId);
 
         }
     }
