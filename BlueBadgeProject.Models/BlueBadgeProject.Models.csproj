@@ -59,6 +59,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GroupCreate.cs" />
+    <Compile Include="GroupItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RecCreate.cs" />
     <Compile Include="RecItem.cs" />
