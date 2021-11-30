@@ -15,7 +15,7 @@ namespace BlueBadgeProject.WebAPI.Controllers
     {
         private UserProfileService CreateUserProfileService()
         {
-            var userId = Guid.Parse(User.Identity.GetUserId());
+            var userId = User.Identity.GetUserId();
             var userProfileService = new UserProfileService(userId);
             return userProfileService;
         }
@@ -40,7 +40,7 @@ namespace BlueBadgeProject.WebAPI.Controllers
             return Ok();
         }
 
-        public IHttpActionResult Get(int id)
+        public IHttpActionResult Get(string id)
         {
             UserProfileService userProfileService = CreateUserProfileService();
             var userProfile = userProfileService.GetUserProfileById(id);
