@@ -19,7 +19,7 @@ namespace BlueBadgeProject.WebAPI.Controllers
             var userProfileService = new UserProfileService(userId);
             return userProfileService;
         }
-
+        [Route("api/UserProfile/all")]
         public IHttpActionResult GetAll()
         {
             UserProfileService userProfileService = CreateUserProfileService();
@@ -39,7 +39,12 @@ namespace BlueBadgeProject.WebAPI.Controllers
 
             return Ok();
         }
-
+        public IHttpActionResult Get()
+        {
+            UserProfileService userProfileService = CreateUserProfileService();
+            var userProfile = userProfileService.GetUserProfile();
+            return Ok(userProfile);
+        }
         public IHttpActionResult Get(string id)
         {
             UserProfileService userProfileService = CreateUserProfileService();

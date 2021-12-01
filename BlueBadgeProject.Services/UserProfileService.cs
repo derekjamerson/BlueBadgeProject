@@ -2,6 +2,7 @@
 using BlueBadgeProject.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,6 +21,7 @@ namespace BlueBadgeProject.Services
             var entity =
                 new UserProfile()
                 {
+                    UserProfileId = _userId,
                     FirstName = model.FirstName,
                     LastName = model.LastName
                 };
@@ -42,6 +44,7 @@ namespace BlueBadgeProject.Services
                             e =>
                                 new UserProfileItem
                                 {
+                                    UserProfileId = e.UserProfileId,
                                     FirstName = e.FirstName,
                                     LastName = e.LastName
                                 }
@@ -75,6 +78,23 @@ namespace BlueBadgeProject.Services
                     ctx
                         .UserProfiles
                         .Single(e => e.UserProfileId == id && e.UserProfileId == _userId);
+                return
+                    new UserProfileItem
+                    {
+                        UserProfileId = entity.UserProfileId,
+                        FirstName = entity.FirstName,
+                        LastName = entity.LastName
+                    };
+            }
+        }
+        public UserProfileItem GetUserProfile()
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity =
+                    ctx
+                        .UserProfiles
+                        .Single(e => e.UserProfileId == _userId);
                 return
                     new UserProfileItem
                     {
