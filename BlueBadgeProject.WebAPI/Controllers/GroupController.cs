@@ -14,7 +14,6 @@ namespace BlueBadgeProject.WebAPI.Controllers
     public class GroupController : ApiController
     {
 
-        // GET: Group
         private GroupService CreateGroupService()
         {
             var userId = User.Identity.GetUserId();
@@ -42,8 +41,15 @@ namespace BlueBadgeProject.WebAPI.Controllers
             var groups = groupService.GetGroups();
             return Ok(groups);
         }
+        [HttpGet]
+        public IHttpActionResult GetByGroupId(int id)
+        {
+            GroupService service = CreateGroupService();
+            var group = service.GetGroupById(id);
+            return Ok(group);
+        }
         [HttpPut]
-        public IHttpActionResult Put(GroupItem group)
+        public IHttpActionResult Put(GroupItemFull group)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -54,15 +60,6 @@ namespace BlueBadgeProject.WebAPI.Controllers
                 return InternalServerError();
 
             return Ok();
-        }
-        [HttpGet]
-        public IHttpActionResult GetByGroupId(int id)
-        {
-
-            GroupService grouped = CreateGroupService();
-            var intId = grouped.GetGroupById(id);
-            return Ok(intId);
-
         }
     }
 }

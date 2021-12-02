@@ -1,16 +1,16 @@
-﻿using System;
+﻿using BlueBadgeProject.Data;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace BlueBadgeProject.Models
 {
-    public class GroupCreate
+    public class GroupItemPartial
     {
-        [Required]
+        public int GroupId { get; set; }
         public string Name { get; set; }
+        public ICollection<UserProfile> ListOfUsers { get; set; }
     }
 }
-

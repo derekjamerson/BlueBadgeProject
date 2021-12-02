@@ -15,7 +15,6 @@ namespace BlueBadgeProject.Services
         {
             _userId = userId;
         }
-        //post
         public bool CreateGroup(GroupCreate model)
         {
             var entity = new Group()
@@ -28,7 +27,7 @@ namespace BlueBadgeProject.Services
                 return ctx.SaveChanges() == 1;
             }
         }
-        public GroupItem GetGroupById(int id)
+        public GroupItemFull GetGroupById(int id)
         {
             using (var ctx = new ApplicationDbContext())
             {
@@ -36,15 +35,22 @@ namespace BlueBadgeProject.Services
                     ctx
                         .Groups
                         .Single(e => e.GroupId == id);
+                var recEntity =
+                    ctx
+                        .Recommendations
+                        .Where(e => e.GroupId == id)
+                        .ToArray();
                 return
-                    new GroupItem
+                    new GroupItemFull
                     {
                         GroupId = entity.GroupId,
                         Name = entity.Name,
+                        ListOfUsers = entity.ListOfUsers,
+                        ListOfRecs = recEntity
                     };
             }
         }
-        public IEnumerable<GroupItem> GetGroups()
+        public IEnumerable<GroupItemPartial> GetGroups()
         {
             using (var ctx = new ApplicationDbContext())
             {
@@ -53,14 +59,16 @@ namespace BlueBadgeProject.Services
                         .Groups
                         .Select(
                             e =>
-                                new GroupItem
+                                new GroupItemPartial
                                 {
                                     GroupId = e.GroupId,
+                                    Name = e.Name,
+                                    ListOfUsers = e.ListOfUsers
                                 });
                 return query.ToArray();
             }
         }
-        public bool UpdateGroup(GroupItem model)
+        public bool UpdateGroup(GroupUpdate model)
         {
             using (var ctx = new ApplicationDbContext())
             {
@@ -70,7 +78,6 @@ namespace BlueBadgeProject.Services
                         .Single(e => e.GroupId == model.GroupId);
 
                 entity.Name = model.Name;
-                entity.GroupId = model.GroupId;
 
                 return ctx.SaveChanges() == 1;
             }
