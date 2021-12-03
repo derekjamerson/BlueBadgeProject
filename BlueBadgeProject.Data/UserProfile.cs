@@ -18,6 +18,14 @@ namespace BlueBadgeProject.Data
 
         public string LastName { get; set; }
 
+        public string FullName
+        {
+            get
+            {
+                return $"{FirstName} {LastName}";
+            }
+        }
+
         public virtual ICollection<Group> ListOfGroups { get; set; }
         
         public UserProfile()

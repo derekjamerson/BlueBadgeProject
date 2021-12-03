@@ -10,8 +10,7 @@ namespace BlueBadgeProject.Models
     public class UserProfileItem
     {
         public string UserProfileId { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-
+        public string Name { get; set; }
+        
     }
 }
