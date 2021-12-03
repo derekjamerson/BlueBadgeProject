@@ -19,13 +19,6 @@ namespace BlueBadgeProject.WebAPI.Controllers
             var userProfileService = new UserProfileService(userId);
             return userProfileService;
         }
-        [Route("api/UserProfile/all")]
-        public IHttpActionResult GetAll()
-        {
-            UserProfileService userProfileService = CreateUserProfileService();
-            var userProfiles = userProfileService.GetUserProfiles();
-            return Ok(userProfiles);
-        }
 
         public IHttpActionResult Post(UserProfileCreate userProfile)
         {
@@ -39,6 +32,13 @@ namespace BlueBadgeProject.WebAPI.Controllers
 
             return Ok();
         }
+        [Route("api/UserProfile/all")]
+        public IHttpActionResult GetAll()
+        {
+            UserProfileService userProfileService = CreateUserProfileService();
+            var userProfiles = userProfileService.GetUserProfiles();
+            return Ok(userProfiles);
+        }
         public IHttpActionResult Get()
         {
             UserProfileService userProfileService = CreateUserProfileService();
@@ -51,8 +51,8 @@ namespace BlueBadgeProject.WebAPI.Controllers
             var userProfile = userProfileService.GetUserProfileById(id);
             return Ok(userProfile);
         }
-
-        public IHttpActionResult Put(UserProfileCreate userProfile)
+        [HttpPut]
+        public IHttpActionResult UpdateUserProfile(UserProfileCreate userProfile)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -60,6 +60,19 @@ namespace BlueBadgeProject.WebAPI.Controllers
             var service = CreateUserProfileService();
 
             if (!service.UpdateUserProfile(userProfile))
+                return InternalServerError();
+
+            return Ok();
+        }
+        [HttpPut]
+        public IHttpActionResult AddUserToGroup(int groupId)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var service = CreateUserProfileService();
+
+            if (!service.AddUserToGroup(groupId))
                 return InternalServerError();
 
             return Ok();
