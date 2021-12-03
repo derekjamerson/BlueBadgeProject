@@ -11,6 +11,6 @@ namespace BlueBadgeProject.Models
     {
         public string UserProfileId { get; set; }
         public string Name { get; set; }
-        
+        public ICollection<GroupUpdate> ListOfGroups { get; set; }
     }
 }
