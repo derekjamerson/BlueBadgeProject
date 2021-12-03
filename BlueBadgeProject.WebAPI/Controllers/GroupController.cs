@@ -49,7 +49,7 @@ namespace BlueBadgeProject.WebAPI.Controllers
             return Ok(group);
         }
         [HttpPut]
-        public IHttpActionResult Put(GroupItemFull group)
+        public IHttpActionResult Put(GroupUpdate group)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
