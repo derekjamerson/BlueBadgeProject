@@ -16,7 +16,7 @@ namespace BlueBadgeProject.Services
             _userId = userId;
         }
 
-            public bool CreateRecommendation(RecCreate model)
+        public bool CreateRecommendation(RecCreate model)
         {
             var entity = new Recommendation()
             {

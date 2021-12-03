@@ -36,9 +36,11 @@ namespace BlueBadgeProject.Services
         {
             using (var ctx = new ApplicationDbContext())
             {
-                var query =
-                    ctx
-                        .UserProfiles
+                var query = ctx.UserProfiles;
+                                                
+                var items =
+                    query
+                        .AsEnumerable()
                         .Select(
                             e =>
                                 new UserProfileItem
@@ -46,9 +48,8 @@ namespace BlueBadgeProject.Services
                                     UserProfileId = e.UserProfileId,
                                     Name = GetFullName(e)
                                 }
-                         );
-
-                return query.ToArray();
+                        );
+                return items.ToArray();
             }
         }
         public UserProfileItem GetUserProfile()
@@ -71,7 +72,7 @@ namespace BlueBadgeProject.Services
         }
         public UserProfileItem GetUserProfileById(string id)
         {
-            using(var ctx = new ApplicationDbContext())
+            using (var ctx = new ApplicationDbContext())
             {
                 var entity =
                     ctx
@@ -88,7 +89,7 @@ namespace BlueBadgeProject.Services
         }
         public bool UpdateUserProfile(UserProfileCreate model)
         {
-            using(var ctx = new ApplicationDbContext())
+            using (var ctx = new ApplicationDbContext())
             {
                 var entity =
                     ctx
@@ -113,9 +114,9 @@ namespace BlueBadgeProject.Services
                     ctx
                         .Groups
                         .ToArray();
-                foreach(Group group in listOfGroups)
+                foreach (Group group in listOfGroups)
                 {
-                    if(group.GroupId == groupId)
+                    if (group.GroupId == groupId)
                     {
                         entity.ListOfGroups.Add(group);
                     }

@@ -70,6 +70,7 @@
     <Compile Include="SongItem.cs" />
     <Compile Include="UserProfileCreate.cs" />
     <Compile Include="UserProfileItem.cs" />
+    <Compile Include="UserProfileItemTwo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
