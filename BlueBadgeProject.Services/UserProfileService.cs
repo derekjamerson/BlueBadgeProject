@@ -44,8 +44,7 @@ namespace BlueBadgeProject.Services
                                 new UserProfileItem
                                 {
                                     UserProfileId = e.UserProfileId,
-                                    FirstName = e.FirstName,
-                                    LastName = e.LastName
+                                    Name = e.FullName
                                 }
                          );
 
@@ -83,10 +82,9 @@ namespace BlueBadgeProject.Services
                     new UserProfileItem
                     {
                         UserProfileId = entity.UserProfileId,
-                        FirstName = entity.FirstName,
-                        LastName = entity.LastName,
+                        Name = entity.FullName,
                         ListOfGroups = ListOfUsersGroups(entity)
-            };
+                    };
             }
         }
         public bool UpdateUserProfile(UserProfileCreate model)
