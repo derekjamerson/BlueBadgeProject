@@ -44,7 +44,7 @@ namespace BlueBadgeProject.Services
                                 new UserProfileItem
                                 {
                                     UserProfileId = e.UserProfileId,
-                                    Name = e.FullName
+                                    Name = GetFullName(e)
                                 }
                          );
 
@@ -64,10 +64,9 @@ namespace BlueBadgeProject.Services
                     new UserProfileItem
                     {
                         UserProfileId = entity.UserProfileId,
-                        FirstName = entity.FirstName,
-                        LastName = entity.LastName,
+                        Name = GetFullName(entity),
                         ListOfGroups = ListOfUsersGroups(entity)
-            };
+                    };
             }
         }
         public UserProfileItem GetUserProfileById(string id)
@@ -82,7 +81,7 @@ namespace BlueBadgeProject.Services
                     new UserProfileItem
                     {
                         UserProfileId = entity.UserProfileId,
-                        Name = entity.FullName,
+                        Name = GetFullName(entity),
                         ListOfGroups = ListOfUsersGroups(entity)
                     };
             }
@@ -138,6 +137,10 @@ namespace BlueBadgeProject.Services
                     });
             }
             return _groups;
+        }
+        private string GetFullName(UserProfile user)
+        {
+            return $"{user.FirstName} {user.LastName}";
         }
     }
 }
