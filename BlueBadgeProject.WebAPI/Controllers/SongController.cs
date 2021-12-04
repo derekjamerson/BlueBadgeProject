@@ -56,5 +56,18 @@ namespace BlueBadgeProject.WebAPI.Controllers
 
             return Ok();
         }
+        [HttpPost]
+        public IHttpActionResult CreateRecSong(SongCreate song, int groupId)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var service = CreateSongService();
+
+            if (!service.CreateAndRecommendSong(song, groupId))
+                return InternalServerError();
+
+            return Ok();
+        }
     }
 }
