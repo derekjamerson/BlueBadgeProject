@@ -46,7 +46,7 @@ namespace BlueBadgeProject.Services
                                 new UserProfileItem
                                 {
                                     UserProfileId = e.UserProfileId,
-                                    Name = GetFullName(e)
+                                    Name = GetFullName(e)                                    
                                 }
                         );
                 return items.ToArray();
