@@ -42,7 +42,7 @@ namespace BlueBadgeProject.WebAPI.Controllers
         {
             SongService songService = CreateSongService();
             IEnumerable<SongItem> _songs = songService.GetSongs();
-            return Ok();
+            return Ok(_songs);
         }
         public IHttpActionResult Put(SongItem song)
         {
