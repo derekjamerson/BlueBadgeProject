@@ -79,5 +79,43 @@ namespace BlueBadgeProject.Services
                 return ctx.SaveChanges() == 1;
             }
         }
+
+        public bool CreateAndRecommendSong(SongCreate song, int groupId)
+        {
+
+            var entity = new Song()
+            {
+                Title = song.Title,
+                Artist = song.Artist,
+
+            };
+
+            using (var ctx = new ApplicationDbContext())
+            {
+                ctx.Songs.Add(entity);
+                if( ctx.SaveChanges() != 1)
+                    return false;
+            }
+
+            var e = new RecCreate()
+            {
+                SongId = entity.SongId,
+                GroupId = groupId
+            };
+
+            var recom = new Recommendation()
+            {
+                SongId = e.SongId,
+                UserProfileId = _userId,
+                GroupId = e.GroupId
+            };
+            using (var ctx = new ApplicationDbContext())
+            {
+                ctx.Recommendations.Add(recom);
+                if( ctx.SaveChanges() != 1)
+                    return false;
+            }
+            return true;
+        }
     }
 }
