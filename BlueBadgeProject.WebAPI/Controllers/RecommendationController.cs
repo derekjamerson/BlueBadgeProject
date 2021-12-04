@@ -22,36 +22,52 @@ namespace BlueBadgeProject.WebAPI.Controllers
         }
         public IHttpActionResult Post(RecCreate rec)
         {
-            if (!ModelState.IsValid)
+            var service = CreateRecommendationService();
+            if (service.CheckUserProfile())
+            {
+                if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var service = CreateRecommendationService();
+            
 
             if (!service.CreateRecommendation(rec))
                 return InternalServerError();
 
             return Ok();
+            }
+            else return BadRequest("this is wrong");
         }
         public IHttpActionResult GetById(int id)
         {
             RecommendationService recService = CreateRecommendationService();
-            var rec = recService.GetRecById(id);
+            if (recService.CheckUserProfile())
+            {
+                var rec = recService.GetRecById(id);
             return Ok(rec);
+            }
+            else return BadRequest("this is wrong");
         }
         public IHttpActionResult GetByGroupId(int id)
         {
             RecommendationService recService = CreateRecommendationService();
-            var recs = recService.GetRecsByGroupId(id);
+            if (recService.CheckUserProfile())
+            {
+                var recs = recService.GetRecsByGroupId(id);
             return Ok(recs);
+            }
+            else return BadRequest("this is wrong");
         }
         public IHttpActionResult Delete(int id)
         {
             var service = CreateRecommendationService();
-
-            if (!service.DeleteRecommendation(id))
+            if (service.CheckUserProfile())
+            {
+                if (!service.DeleteRecommendation(id))
                 return InternalServerError();
 
             return Ok();
+            }
+            else return BadRequest("this is wrong");
         }
     }
 }

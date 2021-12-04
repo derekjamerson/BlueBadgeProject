@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Services.Description;
 
 namespace BlueBadgeProject.WebAPI.Controllers
 {
@@ -15,46 +16,67 @@ namespace BlueBadgeProject.WebAPI.Controllers
     {
         private SongService CreateSongService()
         {
-            var userId = User.Identity.GetUserId();
+            
+                var userId = User.Identity.GetUserId();
             var songService = new SongService(userId);
             return songService;
+            
         }
 
         public IHttpActionResult Post(SongCreate song)
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+             var service = CreateSongService();
+            if (service.CheckUserProfile())
+            {
+                if (!ModelState.IsValid)
+                     return BadRequest(ModelState);
 
-            var service = CreateSongService();
+                
 
-            if (!service.CreateSong(song))
-                return InternalServerError();
+                 if (!service.CreateSong(song))
+                     return InternalServerError();
 
-            return Ok();
-        }
+                     return Ok();
+            }
+            else return BadRequest("this is wrong");
+    }
         public IHttpActionResult GetSongById(int id)
         {
             SongService songService = CreateSongService();
-            var song = songService.GetSongById(id);
+            if (songService.CheckUserProfile())
+            {
+                var song = songService.GetSongById(id);
             return Ok(song);
+            }
+            else return BadRequest("this is wrong");
         }
         public IHttpActionResult GetAll()
         {
+
             SongService songService = CreateSongService();
-            IEnumerable<SongItem> _songs = songService.GetSongs();
+            if (songService.CheckUserProfile())
+            {
+                IEnumerable<SongItem> _songs = songService.GetSongs();
             return Ok();
+            }
+            else return BadRequest("this is wrong");
         }
         public IHttpActionResult Put(SongItem song)
         {
-            if (!ModelState.IsValid)
+            var service = CreateSongService();
+            if (service.CheckUserProfile())
+            {
+                if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var service = CreateSongService();
+            
 
             if (!service.UpdateSong(song))
                 return InternalServerError();
 
             return Ok();
+            }
+            else return BadRequest("this is wrong");
         }
     }
 }

@@ -15,7 +15,17 @@ namespace BlueBadgeProject.Services
         {
             _userId = userId;
         }
-
+        public bool CheckUserProfile()
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity =
+                    ctx
+                        .UserProfiles
+                        .Single(e => e.UserProfileId == _userId);
+                return entity.UserProfileId != null;
+            }
+        }
         public bool CreateRecommendation(RecCreate model)
         {
             var entity = new Recommendation()
