@@ -32,6 +32,17 @@ namespace BlueBadgeProject.Services
                 return ctx.SaveChanges() == 1;
             }
         }
+        public bool CheckUserProfile()
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity =
+                    ctx
+                        .UserProfiles
+                        .Single(e => e.UserProfileId == _userId);
+                return entity.UserProfileId != null;
+            }
+        }
         public IEnumerable<UserProfileItem> GetUserProfiles()
         {
             using (var ctx = new ApplicationDbContext())

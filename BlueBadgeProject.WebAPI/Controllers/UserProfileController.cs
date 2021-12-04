@@ -22,7 +22,10 @@ namespace BlueBadgeProject.WebAPI.Controllers
 
         public IHttpActionResult Post(UserProfileCreate userProfile)
         {
-            if (!ModelState.IsValid)
+            UserProfileService userProfileService = CreateUserProfileService();
+            if (userProfileService.CheckUserProfile())
+            {
+                if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             var service = CreateUserProfileService();
@@ -31,30 +34,51 @@ namespace BlueBadgeProject.WebAPI.Controllers
                 return InternalServerError();
 
             return Ok();
+            }
+            else return BadRequest("this is wrong");
         }
         [Route("api/UserProfile/all")]
         public IHttpActionResult GetAll()
         {
             UserProfileService userProfileService = CreateUserProfileService();
+            if (userProfileService.CheckUserProfile())
+            {
+               
             var userProfiles = userProfileService.GetUserProfiles();
             return Ok(userProfiles);
+            }
+            else return BadRequest("this is wrong");
         }
         public IHttpActionResult Get()
         {
+
             UserProfileService userProfileService = CreateUserProfileService();
-            var userProfile = userProfileService.GetUserProfile();
-            return Ok(userProfile);
+            if (userProfileService.CheckUserProfile())
+            {
+                var userProfile = userProfileService.GetUserProfile();
+                return Ok(userProfile);
+            }
+            else return BadRequest("this is wrong");
         }
         public IHttpActionResult Get(string id)
         {
             UserProfileService userProfileService = CreateUserProfileService();
-            var userProfile = userProfileService.GetUserProfileById(id);
-            return Ok(userProfile);
+            if (userProfileService.CheckUserProfile())
+            {
+                
+                var userProfile = userProfileService.GetUserProfileById(id);
+                return Ok(userProfile);
+            }
+            else return BadRequest("this is wrong");
         }
+      
         [HttpPut]
         public IHttpActionResult UpdateUserProfile(UserProfileCreate userProfile)
         {
-            if (!ModelState.IsValid)
+            UserProfileService userProfileService = CreateUserProfileService();
+            if (userProfileService.CheckUserProfile())
+            {
+                if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             var service = CreateUserProfileService();
@@ -63,11 +87,16 @@ namespace BlueBadgeProject.WebAPI.Controllers
                 return InternalServerError();
 
             return Ok();
+            }
+            else return BadRequest("this is wrong");
         }
         [HttpPut, Route("api/UserProfile/Add{groupId}")]
         public IHttpActionResult AddUserToGroup(int groupId)
         {
-            if (!ModelState.IsValid)
+            UserProfileService userProfileService = CreateUserProfileService();
+            if (userProfileService.CheckUserProfile())
+            {
+                if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             var service = CreateUserProfileService();
@@ -76,6 +105,8 @@ namespace BlueBadgeProject.WebAPI.Controllers
                 return InternalServerError();
 
             return Ok();
+            }
+            else return BadRequest("this is wrong");
         }
         [HttpPut, Route("api/UserProfile/Remove{groupId}")]
         public IHttpActionResult RemoveUserFromGroup(int groupId)
