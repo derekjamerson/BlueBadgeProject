@@ -38,14 +38,26 @@ namespace BlueBadgeProject.Services
                 var recEntity =
                     ctx
                         .Recommendations
+                        .Include(nameof(Recommendation.UserProfile))
                         .Where(e => e.GroupId == id)
-                        .ToArray();
+                        .AsEnumerable()
+                        .Select(
+                            e =>
+                                new RecViewModel
+                                {
+                                    RecommendationId = e.RecommendationId,
+                                    SongTitle = GetSongFromRec(e).Title,
+                                    SongArtist = GetSongFromRec(e).Artist,
+                                    RecommendedBy = GetFullName(e.UserProfile)
+                                })
+                        .ToList();
+
                 return
                     new GroupItemFull
                     {
                         GroupId = entity.GroupId,
                         Name = entity.Name,
-                        ListOfUsers = entity.ListOfUsers,
+                        ListOfUsers = ListOfGroupsUsers(entity),
                         ListOfRecs = recEntity
                     };
             }
@@ -57,13 +69,14 @@ namespace BlueBadgeProject.Services
                 var query =
                     ctx
                         .Groups
+                        .AsEnumerable()
                         .Select(
                             e =>
                                 new GroupItemPartial
                                 {
                                     GroupId = e.GroupId,
                                     Name = e.Name,
-                                    ListOfUsers = e.ListOfUsers
+                                    ListOfUsers = ListOfGroupsUsers(e)
                                 });
                 return query.ToArray();
             }
@@ -80,6 +93,35 @@ namespace BlueBadgeProject.Services
                 entity.Name = model.Name;
 
                 return ctx.SaveChanges() == 1;
+            }
+        }
+        private ICollection<UserProfileViewModel> ListOfGroupsUsers(Group group)
+        {
+            ICollection<UserProfileViewModel> _users = new List<UserProfileViewModel>();
+            foreach (UserProfile user in group.ListOfUsers)
+            {
+                _users.Add(
+                    new UserProfileViewModel
+                    {
+                        UserProfileId = user.UserProfileId,
+                        Name = GetFullName(user)
+                    });
+            }
+            return _users;
+        }
+        private string GetFullName(UserProfile user)
+        {
+            return $"{user.FirstName} {user.LastName}";
+        }
+        private Song GetSongFromRec(Recommendation rec)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity =
+                    ctx
+                        .Songs
+                        .Single(e => e.SongId == rec.SongId);
+                return entity;
             }
         }
     }

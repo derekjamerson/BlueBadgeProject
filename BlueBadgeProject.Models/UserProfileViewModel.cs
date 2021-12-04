@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace BlueBadgeProject.Models
 {
-    public class UserProfileItemTwo
+    public class UserProfileViewModel
     {
         public string UserProfileId { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public ICollection<GroupUpdate> ListOfGroups { get; set; }
+        public string Name { get; set; }
     }
 }

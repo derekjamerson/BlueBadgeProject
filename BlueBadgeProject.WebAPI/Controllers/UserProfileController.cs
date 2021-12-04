@@ -90,7 +90,7 @@ namespace BlueBadgeProject.WebAPI.Controllers
             }
             else return BadRequest("this is wrong");
         }
-        [HttpPut]
+        [HttpPut, Route("api/UserProfile/Add{groupId}")]
         public IHttpActionResult AddUserToGroup(int groupId)
         {
             UserProfileService userProfileService = CreateUserProfileService();
@@ -107,6 +107,19 @@ namespace BlueBadgeProject.WebAPI.Controllers
             return Ok();
             }
             else return BadRequest("this is wrong");
+        }
+        [HttpPut, Route("api/UserProfile/Remove{groupId}")]
+        public IHttpActionResult RemoveUserFromGroup(int groupId)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var service = CreateUserProfileService();
+
+            if (!service.RemoveUserFromGroup(groupId))
+                return InternalServerError();
+
+            return Ok();
         }
     }
 }

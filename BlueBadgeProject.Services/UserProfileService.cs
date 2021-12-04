@@ -47,20 +47,19 @@ namespace BlueBadgeProject.Services
         {
             using (var ctx = new ApplicationDbContext())
             {
-                var query = ctx.UserProfiles;
-                                                
-                var items =
-                    query
+                var query = 
+                    ctx
+                        .UserProfiles
                         .AsEnumerable()
                         .Select(
                             e =>
                                 new UserProfileItem
                                 {
                                     UserProfileId = e.UserProfileId,
-                                    Name = GetFullName(e)
+                                    Name = GetFullName(e)                                    
                                 }
                         );
-                return items.ToArray();
+                return query.ToArray();
             }
         }
         public UserProfileItem GetUserProfile()
@@ -121,18 +120,35 @@ namespace BlueBadgeProject.Services
                     ctx
                         .UserProfiles
                         .Single(e => e.UserProfileId == _userId);
-                var listOfGroups =
+                var _groups =
                     ctx
                         .Groups
                         .ToArray();
-                foreach (Group group in listOfGroups)
-                {
-                    if (group.GroupId == groupId)
-                    {
-                        entity.ListOfGroups.Add(group);
-                    }
-                }
+                entity.ListOfGroups.Add(
+                                        _groups
+                                            .Single(
+                                                e =>
+                                                    e.GroupId == groupId
+                                            ));
+                return ctx.SaveChanges() == 1;
+            }
+        }
+        public bool RemoveUserFromGroup(int groupId)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity =
+                    ctx
+                        .UserProfiles
+                        .Single(e => e.UserProfileId == _userId);
 
+                entity.ListOfGroups.Remove(
+                                        entity
+                                            .ListOfGroups
+                                            .Single(
+                                                e =>
+                                                    e.GroupId == groupId
+                                            ));
                 return ctx.SaveChanges() == 1;
             }
         }

@@ -54,12 +54,14 @@ namespace BlueBadgeProject.WebAPI.Controllers
         {
 
             SongService songService = CreateSongService();
+
             if (songService.CheckUserProfile())
             {
                 IEnumerable<SongItem> _songs = songService.GetSongs();
             return Ok();
             }
             else return BadRequest("this is wrong");
+
         }
         public IHttpActionResult Put(SongItem song)
         {
@@ -77,6 +79,19 @@ namespace BlueBadgeProject.WebAPI.Controllers
             return Ok();
             }
             else return BadRequest("this is wrong");
+        }
+        [HttpPost]
+        public IHttpActionResult CreateRecSong(SongCreate song, int groupId)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var service = CreateSongService();
+
+            if (!service.CreateAndRecommendSong(song, groupId))
+                return InternalServerError();
+
+            return Ok();
         }
     }
 }
