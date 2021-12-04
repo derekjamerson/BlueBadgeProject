@@ -82,6 +82,8 @@ namespace BlueBadgeProject.Services
 
         public bool CreateAndRecommendSong(SongCreate song, int groupId)
         {
+            if (!UserInGroup(groupId))
+                return false;
 
             var entity = new Song()
             {
@@ -93,7 +95,7 @@ namespace BlueBadgeProject.Services
             using (var ctx = new ApplicationDbContext())
             {
                 ctx.Songs.Add(entity);
-                if( ctx.SaveChanges() != 1)
+                if (ctx.SaveChanges() != 1)
                     return false;
             }
 
@@ -109,13 +111,32 @@ namespace BlueBadgeProject.Services
                 UserProfileId = _userId,
                 GroupId = e.GroupId
             };
+
+
             using (var ctx = new ApplicationDbContext())
             {
                 ctx.Recommendations.Add(recom);
-                if( ctx.SaveChanges() != 1)
+                if (ctx.SaveChanges() != 1)
                     return false;
             }
+
             return true;
+        }
+
+        private bool UserInGroup(int groupId)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                return
+                    ctx
+                        .UserProfiles
+                        .Single(e => e.UserProfileId == _userId)
+                        .ListOfGroups
+                        .SingleOrDefault(e => e.GroupId == groupId)
+                        != null;
+
+
+            }
         }
     }
 }
