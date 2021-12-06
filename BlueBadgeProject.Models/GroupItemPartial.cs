@@ -11,6 +11,6 @@ namespace BlueBadgeProject.Models
     {
         public int GroupId { get; set; }
         public string Name { get; set; }
-        public ICollection<UserProfileViewModel> ListOfUsers { get; set; }
+        public int MemberCount { get; set; }
     }
 }
