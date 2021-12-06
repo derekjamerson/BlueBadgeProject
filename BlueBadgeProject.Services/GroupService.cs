@@ -15,6 +15,17 @@ namespace BlueBadgeProject.Services
         {
             _userId = userId;
         }
+        public bool CheckUserProfile()
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity =
+                    ctx
+                        .UserProfiles
+                        .Single(e => e.UserProfileId == _userId);
+                return entity.UserProfileId != null;
+            }
+        }
         public bool CreateGroup(GroupCreate model)
         {
             var entity = new Group()
@@ -69,6 +80,7 @@ namespace BlueBadgeProject.Services
                 var query =
                     ctx
                         .Groups
+                        .Include(nameof(Group.ListOfUsers))
                         .AsEnumerable()
                         .Select(
                             e =>

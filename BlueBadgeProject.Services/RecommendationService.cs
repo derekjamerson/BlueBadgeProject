@@ -31,7 +31,6 @@ namespace BlueBadgeProject.Services
             if (!UserInGroup(model.GroupId))
                 return false;
 
-            //create recommendation
             var entity = new Recommendation()
             {
                 SongId = model.SongId,
@@ -39,14 +38,11 @@ namespace BlueBadgeProject.Services
                 GroupId = model.GroupId
             };
 
-
-            //add recommendation
             using (var ctx = new ApplicationDbContext())
             {
                 ctx.Recommendations.Add(entity);
                 return ctx.SaveChanges() == 1;
             }
-
         }
         public RecItem GetRecById(int id)
         {
@@ -118,7 +114,6 @@ namespace BlueBadgeProject.Services
                 return ctx.SaveChanges() == 1;
             }
         }
-
         private bool UserInGroup(int groupId)
         {
             using (var ctx = new ApplicationDbContext())
@@ -130,8 +125,6 @@ namespace BlueBadgeProject.Services
                         .ListOfGroups
                         .SingleOrDefault(e => e.GroupId == groupId)
                         != null;
-
-
             }
         }
     }
