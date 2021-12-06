@@ -13,21 +13,22 @@ namespace BlueBadgeProject.WebAPI.Controllers
     [Authorize]
     public class GroupController : ApiController
     {
-
         private GroupService CreateGroupService()
         {
             var userId = User.Identity.GetUserId();
             var groupService = new GroupService(userId);
             return groupService;
-
         }
         [HttpPost]
         public IHttpActionResult Post(GroupCreate group)
         {
+            var service = CreateGroupService();
+
+            if (!service.CheckUserProfile())
+                return BadRequest();
+
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-
-            var service = CreateGroupService();
 
             if (!service.CreateGroup(group))
                 return InternalServerError();
@@ -37,24 +38,35 @@ namespace BlueBadgeProject.WebAPI.Controllers
         [HttpGet]
         public IHttpActionResult GetAll()
         {
-            GroupService groupService = CreateGroupService();
-            var groups = groupService.GetGroups();
+            GroupService service = CreateGroupService();
+
+            if (!service.CheckUserProfile())
+                return BadRequest();
+
+            var groups = service.GetGroups();
             return Ok(groups);
         }
         [HttpGet]
         public IHttpActionResult GetByGroupId(int id)
         {
             GroupService service = CreateGroupService();
+
+            if (!service.CheckUserProfile())
+                return BadRequest();
+
             var group = service.GetGroupById(id);
             return Ok(group);
         }
         [HttpPut]
         public IHttpActionResult Put(GroupUpdate group)
         {
+            var service = CreateGroupService();
+
+            if (!service.CheckUserProfile())
+                return BadRequest();
+
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-
-            var service = CreateGroupService();
 
             if (!service.UpdateGroup(group))
                 return InternalServerError();

@@ -39,6 +39,28 @@ namespace BlueBadgeProject.Services
                 return ctx.SaveChanges() == 1;
             }
         }
+        public bool CreateRecommendation(RecCreate model)
+        {
+            if (!UserInGroup(model.GroupId))
+                return false;
+
+            //create recommendation
+            var entity = new Recommendation()
+            {
+                SongId = model.SongId,
+                UserProfileId = _userId,
+                GroupId = model.GroupId
+            };
+
+
+            //add recommendation
+            using (var ctx = new ApplicationDbContext())
+            {
+                ctx.Recommendations.Add(entity);
+                return ctx.SaveChanges() == 1;
+            }
+
+        }
         public IEnumerable<SongItem> GetSongs()
         {
             using (var ctx = new ApplicationDbContext())
