@@ -76,9 +76,9 @@ namespace BlueBadgeProject.Services
                                 {
                                     GroupId = e.GroupId,
                                     Name = e.Name,
-                                    ListOfUsers = ListOfGroupsUsers(e)
+                                    MemberCount = e.ListOfUsers.Count
                                 });
-                return query.ToArray();
+                return query.ToList();
             }
         }
         public bool UpdateGroup(GroupUpdate model)
