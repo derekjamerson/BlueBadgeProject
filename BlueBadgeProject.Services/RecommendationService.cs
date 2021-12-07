@@ -109,7 +109,7 @@ namespace BlueBadgeProject.Services
                 var entity =
                     ctx
                         .Recommendations
-                        .SingleOrDefault(e => e.RecommendationId == id);
+                        .SingleOrDefault(e => e.RecommendationId == id && e.UserProfileId == _userId);
 
                 if (entity == null)
                     return false;
