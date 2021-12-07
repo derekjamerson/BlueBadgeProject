@@ -16,6 +16,7 @@ using Microsoft.Owin.Security.OAuth;
 using BlueBadgeProject.WebAPI.Models;
 using BlueBadgeProject.WebAPI.Providers;
 using BlueBadgeProject.WebAPI.Results;
+using BlueBadgeProject.Data;
 
 namespace BlueBadgeProject.WebAPI.Controllers
 {

@@ -47,7 +47,9 @@
       <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.3\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.ComponentModel.DataAnnotations">
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.ComponentModel.DataAnnotations.dll</HintPath>
+    </Reference>
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -57,11 +59,29 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GroupCreate.cs" />
+    <Compile Include="GroupUpdate.cs" />
+    <Compile Include="GroupItemPartial.cs" />
+    <Compile Include="GroupItemFull.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RecCreate.cs" />
+    <Compile Include="RecViewModel.cs" />
+    <Compile Include="RecItem.cs" />
+    <Compile Include="SongCreate.cs" />
+    <Compile Include="SongItem.cs" />
+    <Compile Include="UserProfileCreate.cs" />
+    <Compile Include="UserProfileItem.cs" />
+    <Compile Include="UserProfileViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BlueBadgeProject.Data\BlueBadgeProject.Data.csproj">
+      <Project>{125FA27F-7FFC-48F1-A786-39E838E1C5AA}</Project>
+      <Name>BlueBadgeProject.Data</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

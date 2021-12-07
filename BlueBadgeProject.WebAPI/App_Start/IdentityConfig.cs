@@ -4,6 +4,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using BlueBadgeProject.WebAPI.Models;
+using BlueBadgeProject.Data;
 
 namespace BlueBadgeProject.WebAPI
 {
