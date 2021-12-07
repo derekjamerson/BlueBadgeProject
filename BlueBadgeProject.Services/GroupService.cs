@@ -100,7 +100,10 @@ namespace BlueBadgeProject.Services
                 var entity =
                     ctx
                         .Groups
-                        .Single(e => e.GroupId == model.GroupId);
+                        .SingleOrDefault(e => e.GroupId == model.GroupId);
+
+                if (entity == null)
+                    return false;
 
                 entity.Name = model.Name;
 
