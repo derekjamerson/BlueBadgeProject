@@ -104,7 +104,10 @@ namespace BlueBadgeProject.Services
                 var entity =
                     ctx
                         .UserProfiles
-                        .Single(e => e.UserProfileId == _userId);
+                        .SingleOrDefault(e => e.UserProfileId == _userId);
+
+                if (entity == null)
+                    return false;
 
                 entity.FirstName = model.FirstName;
                 entity.LastName = model.LastName;

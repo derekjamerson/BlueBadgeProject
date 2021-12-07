@@ -39,28 +39,6 @@ namespace BlueBadgeProject.Services
                 return ctx.SaveChanges() == 1;
             }
         }
-        public bool CreateRecommendation(RecCreate model)
-        {
-            if (!UserInGroup(model.GroupId))
-                return false;
-
-            //create recommendation
-            var entity = new Recommendation()
-            {
-                SongId = model.SongId,
-                UserProfileId = _userId,
-                GroupId = model.GroupId
-            };
-
-
-            //add recommendation
-            using (var ctx = new ApplicationDbContext())
-            {
-                ctx.Recommendations.Add(entity);
-                return ctx.SaveChanges() == 1;
-            }
-
-        }
         public IEnumerable<SongItem> GetSongs()
         {
             using (var ctx = new ApplicationDbContext())
@@ -103,7 +81,10 @@ namespace BlueBadgeProject.Services
                 var entity =
                     ctx
                         .Songs
-                        .Single(e => e.SongId == model.SongId);
+                        .SingleOrDefault(e => e.SongId == model.SongId);
+
+                if (entity == null)
+                    return false;
 
                 entity.Title = model.Title;
                 entity.Artist = model.Artist;
@@ -111,7 +92,6 @@ namespace BlueBadgeProject.Services
                 return ctx.SaveChanges() == 1;
             }
         }
-
         public bool CreateAndRecommendSong(SongCreate song, int groupId)
         {
             if (!UserInGroup(groupId))
@@ -121,40 +101,33 @@ namespace BlueBadgeProject.Services
             {
                 Title = song.Title,
                 Artist = song.Artist,
-
             };
 
             using (var ctx = new ApplicationDbContext())
             {
                 ctx.Songs.Add(entity);
+
                 if (ctx.SaveChanges() != 1)
                     return false;
             }
 
-            var e = new RecCreate()
-            {
-                SongId = entity.SongId,
-                GroupId = groupId
-            };
-
             var recom = new Recommendation()
             {
-                SongId = e.SongId,
+                SongId = entity.SongId,
                 UserProfileId = _userId,
-                GroupId = e.GroupId
+                GroupId = groupId
             };
-
 
             using (var ctx = new ApplicationDbContext())
             {
                 ctx.Recommendations.Add(recom);
+
                 if (ctx.SaveChanges() != 1)
                     return false;
             }
 
             return true;
         }
-
         private bool UserInGroup(int groupId)
         {
             using (var ctx = new ApplicationDbContext())
@@ -166,8 +139,6 @@ namespace BlueBadgeProject.Services
                         .ListOfGroups
                         .SingleOrDefault(e => e.GroupId == groupId)
                         != null;
-
-
             }
         }
     }
