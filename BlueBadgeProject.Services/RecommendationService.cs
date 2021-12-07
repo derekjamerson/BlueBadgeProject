@@ -109,7 +109,11 @@ namespace BlueBadgeProject.Services
                 var entity =
                     ctx
                         .Recommendations
-                        .Single(e => e.RecommendationId == id);
+                        .SingleOrDefault(e => e.RecommendationId == id);
+
+                if (entity == null)
+                    return false;
+
                 ctx.Recommendations.Remove(entity);
                 return ctx.SaveChanges() == 1;
             }
