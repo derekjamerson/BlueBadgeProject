@@ -87,7 +87,7 @@ namespace BlueBadgeProject.Services
                 var entity =
                     ctx
                         .UserProfiles
-                        .Single(e => e.UserProfileId == id && e.UserProfileId == _userId);
+                        .SingleOrDefault(e => e.UserProfileId == id && e.UserProfileId == _userId);
                 return
                     new UserProfileItem
                     {
